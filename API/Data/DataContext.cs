@@ -15,11 +15,7 @@ namespace API.Data
 		{
 			base.OnModelCreating(modelBuilder);
 
-			modelBuilder.Entity<AppUser>().HasData(
-				new AppUser { Id = 1, UserName = "Bob"},
-				new AppUser { Id = 2, UserName = "Tom"},
-				new AppUser { Id = 3, UserName = "Jane"}
-				);
+			
 		}
 	}
 }
