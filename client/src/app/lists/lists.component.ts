@@ -36,4 +36,10 @@ export class ListsComponent implements OnInit {
       this.loadLikes();
     }
   }
+
+  reloadPage(event: boolean) {
+    if (event) {
+      this.loadLikes();
+    }
+  }
 }

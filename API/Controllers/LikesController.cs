@@ -18,7 +18,7 @@ namespace API.Controllers
             _likesRepository = likesRepository;
         }
 
-        [HttpPost("{username}")]
+        [HttpPost("like/{username}")]
         public async Task<ActionResult> AddLike(string username)
         {
             int sourceUserId = User.GetUserId();
@@ -48,6 +48,25 @@ namespace API.Controllers
                 return Ok();
 
             return BadRequest("Failed to like user");
+        }
+
+        [HttpDelete("unlike/{username}")]
+        public async Task<ActionResult> RemoveLike(string username)
+        {
+            AppUser sourceUser = await _likesRepository.GetUserWithLikes(User.GetUserId());
+            AppUser targetUser = await _userRepository.GetUserByUsernameAsync(username);
+
+            UserLike userLike = await _likesRepository.GetUserLike(sourceUser.Id, targetUser.Id);
+
+            if (userLike is null)
+                return NotFound("You currently do not like this user");
+
+            sourceUser.LikedUsers.Remove(userLike);
+
+            if (await _userRepository.SaveAllAsync())
+                return Ok();
+
+            return BadRequest("Failed to unlike user");
         }
 
         [HttpGet]
