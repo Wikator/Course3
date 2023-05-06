@@ -14,11 +14,11 @@ namespace API.Helpers
 			if (!resultContext.HttpContext.User.Identity.IsAuthenticated)
 				return;
 
-			string userId = resultContext.HttpContext.User.GetUserId();
+			int userId = resultContext.HttpContext.User.GetUserId();
 
 			IUserRepository userRepository = resultContext.HttpContext.RequestServices.GetService<IUserRepository>();
 
-			AppUser user = await userRepository.GetUserByIdAsync(int.Parse(userId));
+			AppUser user = await userRepository.GetUserByIdAsync(userId);
 			user.LastActive = DateTime.UtcNow;
 			await userRepository.SaveAllAsync();
 		}
