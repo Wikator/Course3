@@ -5,10 +5,13 @@ import { map, Observable } from 'rxjs';
 import { AccountService } from '../_services/account.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
-  constructor(private accountService: AccountService, private toastr: ToastrService) {}
+  constructor(
+    private accountService: AccountService,
+    private toastr: ToastrService
+  ) {}
 
   canActivate(): Observable<boolean> {
     return this.accountService.currentUser$.pipe(
@@ -19,6 +22,6 @@ export class AuthGuard implements CanActivate {
           return false;
         }
       })
-    )
+    );
   }
 }

@@ -11,7 +11,7 @@ import { MembersService } from '../../_services/members.service';
 @Component({
   selector: 'app-photo-editor',
   templateUrl: './photo-editor.component.html',
-  styleUrls: ['./photo-editor.component.css']
+  styleUrls: ['./photo-editor.component.css'],
 })
 export class PhotoEditorComponent implements OnInit {
   @Input() member: Member | undefined;
@@ -20,13 +20,15 @@ export class PhotoEditorComponent implements OnInit {
   baseUrl = environment.apiUrl;
   user: User | undefined;
 
-
-  constructor(private accountService: AccountService, private memberService: MembersService) {
+  constructor(
+    private accountService: AccountService,
+    private memberService: MembersService
+  ) {
     this.accountService.currentUser$.pipe(take(1)).subscribe({
       next: user => {
-        if (user) this.user = user
-      }
-    })
+        if (user) this.user = user;
+      },
+    });
   }
 
   ngOnInit(): void {
@@ -47,10 +49,10 @@ export class PhotoEditorComponent implements OnInit {
           this.member.photos.forEach(p => {
             if (p.isMain) p.isMain = false;
             if (p.id === photo.id) p.isMain = true;
-          })
+          });
         }
-      }
-    })
+      },
+    });
   }
 
   initializeUploader() {
@@ -61,12 +63,12 @@ export class PhotoEditorComponent implements OnInit {
       allowedFileType: ['image'],
       removeAfterUpload: true,
       autoUpload: false,
-      maxFileSize: 10 * 1024 * 1024
+      maxFileSize: 10 * 1024 * 1024,
     });
 
-    this.uploader.onAfterAddingFile = (file) => {
+    this.uploader.onAfterAddingFile = file => {
       file.withCredentials = false;
-    }
+    };
 
     this.uploader.onSuccessItem = (item, response, status, headers) => {
       if (response) {
@@ -77,9 +79,8 @@ export class PhotoEditorComponent implements OnInit {
           this.member.photoUrl = photo.url;
           this.accountService.setCurrentUser(this.user);
         }
-      
       }
-    }
+    };
   }
 
   deletePhoto(photoId: number) {
@@ -88,7 +89,7 @@ export class PhotoEditorComponent implements OnInit {
         if (this.member) {
           this.member.photos = this.member.photos.filter(x => x.id !== photoId);
         }
-      }
-    })
+      },
+    });
   }
 }

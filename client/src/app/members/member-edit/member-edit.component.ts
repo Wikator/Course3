@@ -10,11 +10,13 @@ import { MembersService } from '../../_services/members.service';
 @Component({
   selector: 'app-member-edit',
   templateUrl: './member-edit.component.html',
-  styleUrls: ['./member-edit.component.css']
+  styleUrls: ['./member-edit.component.css'],
 })
 export class MemberEditComponent implements OnInit {
-  @ViewChild('editForm') editForm: NgForm | undefined
-  @HostListener('window:beforeunload', ['$event']) unloadNotification($event: any) {
+  @ViewChild('editForm') editForm: NgForm | undefined;
+  @HostListener('window:beforeunload', ['$event']) unloadNotification(
+    $event: any
+  ) {
     if (this.editForm?.dirty) {
       $event.returnValue = true;
     }
@@ -22,11 +24,14 @@ export class MemberEditComponent implements OnInit {
   member: Member | undefined;
   user: User | null = null;
 
-  constructor(private accountService: AccountService, private membersService: MembersService,
-  private toastr: ToastrService) {
+  constructor(
+    private accountService: AccountService,
+    private membersService: MembersService,
+    private toastr: ToastrService
+  ) {
     this.accountService.currentUser$.pipe(take(1)).subscribe({
-      next: user => this.user = user
-    })
+      next: user => (this.user = user),
+    });
   }
 
   ngOnInit(): void {
@@ -36,7 +41,7 @@ export class MemberEditComponent implements OnInit {
   loadMember() {
     if (!this.user) return;
     this.membersService.getMember(this.user.username).subscribe({
-      next: member => this.member = member
+      next: member => (this.member = member),
     });
   }
 
@@ -45,7 +50,7 @@ export class MemberEditComponent implements OnInit {
       next: _ => {
         this.toastr.success('Profile updated successfully');
         this.editForm?.reset(this.member);
-      }
-    })
+      },
+    });
   }
 }

@@ -5,14 +5,14 @@ import { environment } from '../../environments/environment';
 import { User } from '../_models/user';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AccountService {
   baseUrl = environment.apiUrl;
   private currentUserSource = new BehaviorSubject<User | null>(null);
   currentUser$ = this.currentUserSource.asObservable();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   login(model: any) {
     return this.http.post<User>(this.baseUrl + 'account/login', model).pipe(
@@ -22,7 +22,7 @@ export class AccountService {
           this.setCurrentUser(user);
         }
       })
-    )
+    );
   }
 
   register(model: any) {
@@ -32,14 +32,13 @@ export class AccountService {
           this.setCurrentUser(user);
         }
       })
-    )
+    );
   }
 
   setCurrentUser(user: User) {
     localStorage.setItem('user', JSON.stringify(user));
     this.currentUserSource.next(user);
   }
-
 
   logout() {
     localStorage.removeItem('user');
