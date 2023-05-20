@@ -6,7 +6,7 @@ import { MessageService } from '../../_services/message.service';
 @Component({
   selector: 'app-member-messages',
   templateUrl: './member-messages.component.html',
-  styleUrls: ['./member-messages.component.css'],
+  styleUrls: ['./member-messages.component.css']
 })
 export class MemberMessagesComponent implements OnInit {
   @ViewChild('messageForm') messageForm: NgForm | undefined;
@@ -27,7 +27,7 @@ export class MemberMessagesComponent implements OnInit {
         next: message => {
           this.messages.push(message);
           this.messageForm?.reset();
-        },
+        }
       });
   }
 }

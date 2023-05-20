@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import {
   NgxGalleryAnimation,
   NgxGalleryImage,
-  NgxGalleryOptions,
+  NgxGalleryOptions
 } from '@kolkov/ngx-gallery';
 import { TabDirective, TabsetComponent } from 'ngx-bootstrap/tabs';
 import { Member } from '../../_models/member';
@@ -14,7 +14,7 @@ import { MessageService } from '../../_services/message.service';
 @Component({
   selector: 'app-member-detail',
   templateUrl: './member-detail.component.html',
-  styleUrls: ['./member-detail.component.css'],
+  styleUrls: ['./member-detail.component.css']
 })
 export class MemberDetailComponent implements OnInit {
   @ViewChild('memberTabs', { static: true }) memberTabs:
@@ -34,13 +34,13 @@ export class MemberDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.data.subscribe({
-      next: data => (this.member = data['member']),
+      next: data => (this.member = data['member'])
     });
 
     this.route.queryParams.subscribe({
       next: params => {
         params['tab'] && this.selectTab(params['tab']);
-      },
+      }
     });
 
     this.galleryOptions = [
@@ -50,8 +50,8 @@ export class MemberDetailComponent implements OnInit {
         imagePercent: 100,
         thumbnailsColumns: 4,
         imageAnimation: NgxGalleryAnimation.Slide,
-        preview: false,
-      },
+        preview: false
+      }
     ];
 
     this.galleryImages = this.getImages();
@@ -65,7 +65,7 @@ export class MemberDetailComponent implements OnInit {
       imageUrls.push({
         small: photo.url,
         medium: photo.url,
-        big: photo.url,
+        big: photo.url
       });
     }
 
@@ -88,7 +88,7 @@ export class MemberDetailComponent implements OnInit {
   loadMessages() {
     if (this.member) {
       this.messageService.getMessageThread(this.member.userName).subscribe({
-        next: messages => (this.messages = messages),
+        next: messages => (this.messages = messages)
       });
     }
   }

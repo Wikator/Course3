@@ -11,7 +11,7 @@ import { MembersService } from '../../_services/members.service';
 @Component({
   selector: 'app-photo-editor',
   templateUrl: './photo-editor.component.html',
-  styleUrls: ['./photo-editor.component.css'],
+  styleUrls: ['./photo-editor.component.css']
 })
 export class PhotoEditorComponent implements OnInit {
   @Input() member: Member | undefined;
@@ -27,7 +27,7 @@ export class PhotoEditorComponent implements OnInit {
     this.accountService.currentUser$.pipe(take(1)).subscribe({
       next: user => {
         if (user) this.user = user;
-      },
+      }
     });
   }
 
@@ -51,7 +51,7 @@ export class PhotoEditorComponent implements OnInit {
             if (p.id === photo.id) p.isMain = true;
           });
         }
-      },
+      }
     });
   }
 
@@ -63,7 +63,7 @@ export class PhotoEditorComponent implements OnInit {
       allowedFileType: ['image'],
       removeAfterUpload: true,
       autoUpload: false,
-      maxFileSize: 10 * 1024 * 1024,
+      maxFileSize: 10 * 1024 * 1024
     });
 
     this.uploader.onAfterAddingFile = file => {
@@ -89,7 +89,7 @@ export class PhotoEditorComponent implements OnInit {
         if (this.member) {
           this.member.photos = this.member.photos.filter(x => x.id !== photoId);
         }
-      },
+      }
     });
   }
 }

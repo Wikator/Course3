@@ -3,7 +3,7 @@ import {
   HttpRequest,
   HttpHandler,
   HttpEvent,
-  HttpInterceptor,
+  HttpInterceptor
 } from '@angular/common/http';
 import { Observable, take } from 'rxjs';
 import { AccountService } from '../_services/account.service';
@@ -21,11 +21,11 @@ export class JwtInterceptor implements HttpInterceptor {
         if (user) {
           request = request.clone({
             setHeaders: {
-              Authorization: `Bearer ${user.token}`,
-            },
+              Authorization: `Bearer ${user.token}`
+            }
           });
         }
-      },
+      }
     });
 
     return next.handle(request);

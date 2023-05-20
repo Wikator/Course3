@@ -6,7 +6,7 @@ import { MembersService } from '../_services/members.service';
 @Component({
   selector: 'app-nav',
   templateUrl: './nav.component.html',
-  styleUrls: ['./nav.component.css'],
+  styleUrls: ['./nav.component.css']
 })
 export class NavComponent implements OnInit {
   model: any = {};
@@ -24,7 +24,7 @@ export class NavComponent implements OnInit {
       next: _ => {
         this.memberService.resetUserParams();
         this.router.navigateByUrl('/members');
-      },
+      }
     });
   }
 

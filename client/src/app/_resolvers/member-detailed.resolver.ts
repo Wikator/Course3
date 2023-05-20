@@ -3,14 +3,14 @@ import {
   Router,
   Resolve,
   RouterStateSnapshot,
-  ActivatedRouteSnapshot,
+  ActivatedRouteSnapshot
 } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { Member } from '../_models/member';
 import { MembersService } from '../_services/members.service';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class MemberDetailedResolver implements Resolve<Member> {
   constructor(private memberService: MembersService) {}

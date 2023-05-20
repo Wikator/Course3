@@ -5,7 +5,7 @@ import { Message } from '../_models/message';
 import { getPaginatedResult, getPaginationHeaders } from './paginationHelper';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class MessageService {
   baseUrl = environment.apiUrl;
@@ -32,7 +32,7 @@ export class MessageService {
   sendMessage(username: string, content: string) {
     return this.http.post<Message>(this.baseUrl + 'messages', {
       recipientUsername: username,
-      content,
+      content
     });
   }
 

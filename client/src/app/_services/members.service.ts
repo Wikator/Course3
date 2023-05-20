@@ -10,7 +10,7 @@ import { AccountService } from './account.service';
 import { getPaginatedResult, getPaginationHeaders } from './paginationHelper';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class MembersService {
   baseUrl = environment.apiUrl;
@@ -29,7 +29,7 @@ export class MembersService {
           this.userParams = new UserParams(user);
           this.user = user;
         }
-      },
+      }
     });
   }
 
