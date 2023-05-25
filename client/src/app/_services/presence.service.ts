@@ -14,6 +14,8 @@ export class PresenceService {
   private hubConnection?: HubConnection;
   private onlineUsersSource = new BehaviorSubject<string[]>([]);
   onlineUsers$ = this.onlineUsersSource.asObservable();
+  private numberOfUnreadMessagesSource = new BehaviorSubject<number>(0);
+  numberOfUnreadMessages$ = this.numberOfUnreadMessagesSource.asObservable();
 
   constructor(private toastr: ToastrService, private router: Router) {}
 
@@ -43,6 +45,12 @@ export class PresenceService {
     this.hubConnection.on('GetOnlineUsers', (usernames: string[]) => {
       this.onlineUsersSource.next(usernames);
     });
+
+    this.hubConnection.on(
+      'GetNumberOfUnreadMessages',
+      numberOfUnreadMessages =>
+        this.numberOfUnreadMessagesSource.next(numberOfUnreadMessages)
+    );
 
     this.hubConnection.on('newMessageReceived', ({ username, knownAs }) => {
       this.toastr

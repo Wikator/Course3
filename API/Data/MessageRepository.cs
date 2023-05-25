@@ -81,9 +81,7 @@ namespace API.Data
 
 		public async Task<IEnumerable<MessageDto>> GetMessageThread(string currentUserName, string recipientUserName)
 		{
-			IEnumerable<Message> messages = await _context.Messages
-				.Include(u => u.Sender).ThenInclude(p => p.Photos)
-				.Include(u => u.Recipient).ThenInclude(p => p.Photos)
+			IEnumerable<MessageDto> messages = await _context.Messages
 				.Where(
 					m => m.RecipientUsername == currentUserName && !m.RecipientDeleted &&
 					m.SenderUsername == recipientUserName ||
@@ -92,10 +90,19 @@ namespace API.Data
 				)
 				.MarkUnreadAsRead(currentUserName)
 				.OrderBy(m => m.MessageSent)
+				.ProjectTo<MessageDto>(_mapper.ConfigurationProvider)
 				.ToListAsync();
 
+			await _context.SaveChangesAsync();
 
-			return _mapper.Map<IEnumerable<MessageDto>>(messages);
+			return messages;
+		}
+
+		public async Task<int> GetNumberOfUnreadMessages(string currentUser)
+		{
+			return await _context.Messages
+				.Where(u => u.RecipientUsername == currentUser && u.DateRead == null)
+				.CountAsync();
 		}
 
 		public void RemoveConnection(Connection connection)

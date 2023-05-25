@@ -39,7 +39,14 @@ namespace API.SignalR
                 .GetMessageThread(Context.User.GetUsername(), otherUser);
 
             await Clients.Caller.SendAsync("ReceiveMessageThread", messages);
-        }
+
+			List<string> connections = await PresenceTracker.GetConnectionsForUser(Context.User.GetUsername());
+			if (connections is not null)
+			{
+				await _presenceHub.Clients.Clients(connections).SendAsync("GetNumberOfUnreadMessages",
+					await _messageRepository.GetNumberOfUnreadMessages(Context.User.GetUsername()));
+			}
+		}
 
         public override async Task OnDisconnectedAsync(Exception exception)
         {
@@ -90,6 +97,12 @@ namespace API.SignalR
 			if (await _messageRepository.SaveAllAsync())
 			{
 				await Clients.Group(groupName).SendAsync("NewMessage", _mapper.Map<MessageDto>(message));
+				List<string> connections = await PresenceTracker.GetConnectionsForUser(recipient.UserName);
+				if (connections is not null)
+				{
+					await _presenceHub.Clients.Clients(connections).SendAsync("GetNumberOfUnreadMessages",
+						await _messageRepository.GetNumberOfUnreadMessages(recipient.UserName));
+				}
 			}
 		}
 

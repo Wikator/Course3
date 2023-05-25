@@ -20,9 +20,7 @@
           >
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/messages" routerLinkActive="active"
-            >Messeges</a
-          >
+            <a class="nav-link" routerLink="/messages" routerLinkActive="active">Messeges ({{presenceService.numberOfUnreadMessages$ | async}} unread)</a>
         </li>
         <li class="nav-item" *appHasRole="['Amind', 'Moderator']">
           <a class="nav-link" routerLink="/admin" routerLinkActive="active"
