@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  hubUrl: 'https://localhost:5001/hubs/'
 };
